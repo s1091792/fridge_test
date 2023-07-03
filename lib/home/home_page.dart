@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app_test/login/login_page.dart';
 import 'package:flutter_app_test/login/bloc_components/auth_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +17,56 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     /** Getting the user from the FirebaseAuth Instance**/
-    final user = FirebaseAuth.instance.currentUser!;
+    final user = FirebaseAuth.instance.currentUser!;  //獲取當前使用者
+
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    /////
+    // Future<void> fetchFridgeDocuments() async {
+    //   try {
+    //     QuerySnapshot querySnapshot = await firestore.collection('fridge').get();
+    //     List<QueryDocumentSnapshot> documents = querySnapshot.docs;
+    //
+    //     for (QueryDocumentSnapshot document in documents) {
+    //       print('Fridge Document ID: ${document.id}');
+    //       print('Google Account: ${document.data()['googleAccount']}');
+    //       print('Fridge Name: ${document.data()['fridge_name']}');
+    //       print('Fridge Color: ${document.data()['fridge_color']}');
+    //       print('Food ID: ${document.data()['food_id']}');
+    //       print('-----------------------');
+    //     }
+    //   } catch (e) {
+    //     print('Error fetching fridge documents: $e');
+    //   }
+    // }
+
+
+    ////新增冰箱在firestore fridge/隨機id/......
+    // void createFridgeDocument() async {
+    //   String fridgeId = firestore
+    //       .collection('fridge')
+    //       .doc()
+    //       .id;
+    //
+    //   if (user != null) {
+    //     try {
+    //       Map<String, dynamic> fridgeData = {
+    //         'googleAccount': user.email,
+    //         'fridge_name': '冰箱名稱', //這裡到時候要記得改ㄛ
+    //         'fridge_color': '冰箱顏色',
+    //         'food_id': '食品id',
+    //       };
+    //       await firestore.collection('fridge').doc(fridgeId).set(fridgeData);
+    //       print('創建冰箱文件成功');
+    //     } catch (e) {
+    //       print('創建冰箱文件時發生錯誤：$e');
+    //     }
+    //   } else {
+    //     print('當前使用者為空');
+    //   }
+    // }
+    /////
+
     return Scaffold(
       resizeToAvoidBottomInset: false,//不讓畫面因為鍵盤超出頁面
       extendBodyBehindAppBar: true,
@@ -53,6 +103,10 @@ class HomePage extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
+                  ///
+                  // fetchFridgeDocuments();
+                  // createFridgeDocument(); //在點擊時新增冰箱文件到Firestore
+                  ///
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                         builder: (context) => Stack(
