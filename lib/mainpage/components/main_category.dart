@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_test/colors.dart';
 import 'package:flutter_app_test/mainpage/foodmanager/foodstitle_with_more_btn.dart';
 import 'package:flutter_app_test/mainpage/foodmanager/main_foods_pic.dart';
-
+import 'package:flutter_app_test/mainpage/components/getFood.dart';
 import '../foodmanager/new_food.dart';
 import '../recipesearch/title_with_text.dart';
 import 'main_search_header.dart';
@@ -18,14 +18,15 @@ class foodmanager extends StatefulWidget {
 
 class _foodmanagerState extends State<foodmanager> {
   String text="尚未接收資料";
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    Timestamp firebaseTimestamp = Timestamp.fromMillisecondsSinceEpoch(1625266333000);
-    // // 將Firebase的Timestamp轉換為Dart中的DateTime對象
-    // DateTime dateTime = firebaseTimestamp.toDate();
-    // // 現在你可以使用DateTime對象進行其他操作
-    // print(dateTime); // 輸出: 2021-07-03 09:32:13.000
 
     ////
     void createNewfoodDocument() async {
@@ -84,18 +85,18 @@ class _foodmanagerState extends State<foodmanager> {
             Column(
               children: <Widget>[
                 TitleWithMorebtn(title: "即將到期", press: () {}),
-                seven_food_pic(
-                  title: ["$text", "光泉鮮乳", "芹菜"],
-                  date: ["2023-05-15", "2023-05-16", "2023-05-18"],
-                  number: 1,
-                  press: () {},
-                  image: [
-                    'https://i.im.ge/2023/05/13/UYUtlx.image.png',
-                    'https://i.im.ge/2023/05/14/URlu6M.image.png',
-                    'https://i.im.ge/2023/07/06/0ppmbT.image.png',
-                    //'https://picsum.photos/250?image=9',
-                  ],
-                ),
+                // seven_food_pic(
+                //   title: ["$text", "光泉鮮乳", "芹菜"],
+                //   date: ["2023-05-15", "2023-05-16", "2023-05-18"],
+                //   number: 1,
+                //   press: () {},
+                //   image: [
+                //     'https://i.im.ge/2023/05/13/UYUtlx.image.png',
+                //     'https://i.im.ge/2023/05/14/URlu6M.image.png',
+                //     'https://i.im.ge/2023/07/06/0ppmbT.image.png',
+                //     //'https://picsum.photos/250?image=9',
+                //   ],
+                // ),
               ],
             ),
             SizedBox(
@@ -104,19 +105,7 @@ class _foodmanagerState extends State<foodmanager> {
             Column(
               children: [
                 TitleWithMorebtn(title: "七天後到期", press: () {}),
-                seven_food_pic(
-                  title: ["新東陽魚鬆", "光泉鮮乳", "白吐司", "蛋", "豆腐"],
-                  date: ["2023-05-21", "2023-05-24", "2023-05-25", "2023-05-25", "2023-05-25"],
-                  number: 1,
-                  press: () {},
-                  image: [
-                    'https://i.im.ge/2023/05/14/URlf5D.image.png',
-                    'https://i.im.ge/2023/05/14/URlu6M.image.png',
-                    'https://i.im.ge/2023/05/14/URrgT0.image.png',
-                    'https://i.im.ge/2023/07/06/0ppmbT.image.png',
-                    'https://i.im.ge/2023/07/06/0ppmbT.image.png',
-                  ],
-                ),
+                getFood(),
               ],
             ),
             //seven_food_pic(),
@@ -146,22 +135,22 @@ class _foodmanagerState extends State<foodmanager> {
             Column(
               children: [
                 TitleWithMorebtn(title: "一個月後到期", press: () {}),
-                seven_food_pic(
-                  title: [
-                    "新東陽魚鬆", "香腸", "火腿", "金蘭醬油"
-                  ],
-                  date: [
-                    "2023-06-30", "2023-06-30", "2023-06-30", "2023-06-30",
-                  ],
-                  number: 1,
-                  press: () {},
-                  image: [
-                    'https://i.im.ge/2023/05/14/URlf5D.image.png',
-                    'https://i.im.ge/2023/07/06/0ppmbT.image.png',
-                    'https://i.im.ge/2023/07/06/0ppmbT.image.png',
-                    'https://i.im.ge/2023/07/06/0ppmbT.image.png',
-                  ],
-                ),
+                // seven_food_pic(
+                //   title: [
+                //     "新東陽魚鬆", "香腸", "火腿", "金蘭醬油"
+                //   ],
+                //   date: [
+                //     "2023-06-30", "2023-06-30", "2023-06-30", "2023-06-30",
+                //   ],
+                //   number: 1,
+                //   press: () {},
+                //   image: [
+                //     'https://i.im.ge/2023/05/14/URlf5D.image.png',
+                //     'https://i.im.ge/2023/07/06/0ppmbT.image.png',
+                //     'https://i.im.ge/2023/07/06/0ppmbT.image.png',
+                //     'https://i.im.ge/2023/07/06/0ppmbT.image.png',
+                //   ],
+                // ),
               ],
             ),
             SizedBox(

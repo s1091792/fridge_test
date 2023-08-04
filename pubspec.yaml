@@ -43,6 +43,7 @@ dependencies:
   equatable: ^2.0.5
   firebase_core: ^2.10.0
   email_validator: ^2.1.17
+  timeago: ^3.5.0
 
 dev_dependencies:
   flutter_test:
