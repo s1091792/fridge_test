@@ -102,46 +102,28 @@ class _foodmanagerState extends State<foodmanager> {
 
           ],
           ),
-          //   children: <Widget>[
-          //     TitleWithMorebtn(title: "即將到期", press: () {}),
-          //     seven_food_pic(
-          //       title: ["$text", "光泉鮮乳"],
-          //       date: ["2023-05-15", "2023-05-16"],
-          //       number: 1,
-          //       press: () {
-          //         ///
-          //         ///
-          //       },
-          //       image: [
-          //         'https://i.im.ge/2023/05/13/UYUtlx.image.png',
-          //         'https://i.im.ge/2023/05/14/URlu6M.image.png',
-          //         //'https://picsum.photos/250?image=9',
-          //       ],
-          //     ),
-          //   ],
-          // ),
+
 
 
           SizedBox(
           height: kDefaultPadding / 2,
           ),
 
-          Column(
-          children: [
-          TitleWithMorebtn(title: "七天後到期", press: () {}),
-          seven_food_pic(
-          title: ["新東陽魚鬆", "光泉鮮乳", "白吐司"],
-          date: ["2023-05-21", "2023-05-24", "2023-05-25"],
-          number: [1],
-          press: () {},
-          image: [
-          'https://i.im.ge/2023/05/14/URlf5D.image.png',
-          'https://i.im.ge/2023/05/14/URlu6M.image.png',
-          'https://i.im.ge/2023/05/14/URrgT0.image.png',
-          ],
-          ),
-          ],
-          ),
+                    Column(
+                      children: <Widget>[
+                        TitleWithMorebtn(title: "七天後到期", press: () {}),
+                        getFood(),
+                        seven_food_pic(
+                          title: commentsData.map((comment) => comment['title'] as String).toList(),
+                          date: commentsData.map((comment) => comment['date'] as String).toList(),
+                          number: commentsData.map((comment) => comment['number'] as int).toList(),
+                          press: () {},
+                          image: commentsData.map((comment) => comment['image'] as String).toList(),
+                        )
+
+
+                      ],
+                    ),
           //seven_food_pic(),
           /*SizedBox(
               height: kDefaultPadding / 2,
@@ -166,24 +148,21 @@ class _foodmanagerState extends State<foodmanager> {
           SizedBox(
           height: kDefaultPadding / 2,
           ),
-          Column(
-          children: [
-          TitleWithMorebtn(title: "一個月後到期", press: () {}),
-          seven_food_pic(
-          title: [
-          "新東陽魚鬆",
-          ],
-          date: [
-          "2023-06-30",
-          ],
-          number: [1],
-          press: () {},
-          image: [
-          'https://i.im.ge/2023/05/14/URlf5D.image.png',
-          ],
-          ),
-          ],
-          ),
+                    Column(
+                      children: <Widget>[
+                        TitleWithMorebtn(title: "一個月後到期", press: () {}),
+                        getFood(),
+                        seven_food_pic(
+                          title: commentsData.map((comment) => comment['title'] as String).toList(),
+                          date: commentsData.map((comment) => comment['date'] as String).toList(),
+                          number: commentsData.map((comment) => comment['number'] as int).toList(),
+                          press: () {},
+                          image: commentsData.map((comment) => comment['image'] as String).toList(),
+                        )
+
+
+                      ],
+                    ),
           SizedBox(
           height: kDefaultPadding / 2,
           ),

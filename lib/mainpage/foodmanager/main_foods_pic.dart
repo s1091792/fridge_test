@@ -80,7 +80,7 @@ class _seven_food_picState extends State<seven_food_pic> {
                         ),
                         Spacer(),
                         Text(            //顯示數量
-                          '${widget.number} ',
+                          '${widget.number[index]} ',
                           style: Theme.of(context).textTheme.labelLarge?.copyWith(
                             color: kPrimaryColor,
                           ),
