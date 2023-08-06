@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_test/colors.dart';
 import 'package:flutter_app_test/mainpage/foodmanager/foodstitle_with_more_btn.dart';
 import 'package:flutter_app_test/mainpage/foodmanager/main_foods_pic.dart';
-import 'package:flutter_app_test/mainpage/components/getFood.dart';
+
 import '../foodmanager/new_food.dart';
 import '../recipesearch/title_with_text.dart';
 import 'main_search_header.dart';
+import 'getFood.dart';
 
 
 class foodmanager extends StatefulWidget {
@@ -16,100 +17,133 @@ class foodmanager extends StatefulWidget {
   State<foodmanager> createState() => _foodmanagerState();
 }
 
-class _foodmanagerState extends State<foodmanager> {
-  String text="尚未接收資料";
+List<dynamic> allData = []; // 儲存所有抓取到的資料的陣列
 
+//食材管理
+class _foodmanagerState extends State<foodmanager> {
+  String text = "尚未接收資料";
+
+  //////
   @override
   void initState() {
     super.initState();
+    // fetchData(); // 在初始化時開始抓取資料
   }
+
+  //////
 
   @override
   Widget build(BuildContext context) {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    Size size = MediaQuery
+        .of(context)
+        .size;
 
-    ////
-    void createNewfoodDocument() async {
-      String foodId = firestore
-          .collection('food')
-          .doc()
-          .id;
+    //////
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('food').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('發生錯誤: ${snapshot.error}');
+          }
 
-      try {
-        Map<String, dynamic> foodData = {
-          'food_name': text,
-          'amount': 3,
-        };
-        await firestore.collection('food').doc(foodId).set(foodData);
-        print('創建食材文件成功');
-      } catch (e) {
-        print('創建食材文件時發生錯誤：$e');
-      }
-    }
-    ////
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text('載入中...');
+          }
 
-    Size size = MediaQuery.of(context).size;
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
-      },
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            HeaderWithSearchBOx(
-              size: size,
-              imagepath: 'assets/icons/plus.png',
-              otherpage: () async{
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NewFood(),
-                  ),
+          // 獲取所有文件的列表
+          final List<DocumentSnapshot> documents = snapshot.data!.docs;
+          //////
 
-                );
-                //從 B 畫面回傳後更新畫面資料
-                setState(() {
-                  print(result);
-                  if(result!=null){
-                    text = result;
-                    createNewfoodDocument();
-                  }else{
-                    print("新增食材沒有回傳訊息");
-                  }
-                });
-              },
-            ),
-            SizedBox(
-              height: kDefaultPadding / 2,
-            ),
-            Column(
-              children: <Widget>[
-                TitleWithMorebtn(title: "即將到期", press: () {}),
-                // seven_food_pic(
-                //   title: ["$text", "光泉鮮乳", "芹菜"],
-                //   date: ["2023-05-15", "2023-05-16", "2023-05-18"],
-                //   number: 1,
-                //   press: () {},
-                //   image: [
-                //     'https://i.im.ge/2023/05/13/UYUtlx.image.png',
-                //     'https://i.im.ge/2023/05/14/URlu6M.image.png',
-                //     'https://i.im.ge/2023/07/06/0ppmbT.image.png',
-                //     //'https://picsum.photos/250?image=9',
-                //   ],
-                // ),
-              ],
-            ),
-            SizedBox(
-              height: kDefaultPadding / 2,
-            ),
-            Column(
-              children: [
-                TitleWithMorebtn(title: "七天後到期", press: () {}),
-                getFood(),
-              ],
-            ),
-            //seven_food_pic(),
-            /*SizedBox(
+          return GestureDetector(
+            onTap: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+            },
+            child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                  HeaderWithSearchBOx(
+                  size: size,
+                  imagepath: 'assets/icons/plus.png',
+                  otherpage: () async {
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NewFood(),
+                      ),
+
+                    );
+                    //從 B 畫面回傳後更新畫面資料
+                    setState(() {
+                      print(result);
+                      if (result != null) {
+                        text = result;
+                      } else {
+                        print("新增食材沒有回傳訊息");
+                      }
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: kDefaultPadding / 2,
+                ),
+
+                Column(
+                    children: <Widget>[
+                      TitleWithMorebtn(title: "即將到期", press: () {}),
+                      getFood(),
+                      seven_food_pic(
+                        title: commentsData.map((comment) => comment['title'] as String).toList(),
+                        date: commentsData.map((comment) => comment['date'] as String).toList(),
+                        number: commentsData.map((comment) => comment['number'] as int).toList(),
+                        press: () {},
+                        image: commentsData.map((comment) => comment['image'] as String).toList(),
+                      )
+
+
+          ],
+          ),
+          //   children: <Widget>[
+          //     TitleWithMorebtn(title: "即將到期", press: () {}),
+          //     seven_food_pic(
+          //       title: ["$text", "光泉鮮乳"],
+          //       date: ["2023-05-15", "2023-05-16"],
+          //       number: 1,
+          //       press: () {
+          //         ///
+          //         ///
+          //       },
+          //       image: [
+          //         'https://i.im.ge/2023/05/13/UYUtlx.image.png',
+          //         'https://i.im.ge/2023/05/14/URlu6M.image.png',
+          //         //'https://picsum.photos/250?image=9',
+          //       ],
+          //     ),
+          //   ],
+          // ),
+
+
+          SizedBox(
+          height: kDefaultPadding / 2,
+          ),
+
+          Column(
+          children: [
+          TitleWithMorebtn(title: "七天後到期", press: () {}),
+          seven_food_pic(
+          title: ["新東陽魚鬆", "光泉鮮乳", "白吐司"],
+          date: ["2023-05-21", "2023-05-24", "2023-05-25"],
+          number: [1],
+          press: () {},
+          image: [
+          'https://i.im.ge/2023/05/14/URlf5D.image.png',
+          'https://i.im.ge/2023/05/14/URlu6M.image.png',
+          'https://i.im.ge/2023/05/14/URrgT0.image.png',
+          ],
+          ),
+          ],
+          ),
+          //seven_food_pic(),
+          /*SizedBox(
               height: kDefaultPadding / 2,
             ),
             Column(
@@ -128,42 +162,42 @@ class _foodmanagerState extends State<foodmanager> {
                 ),
               ],
             ),*/
-            //seven_food_pic(),
-            SizedBox(
-              height: kDefaultPadding / 2,
-            ),
-            Column(
-              children: [
-                TitleWithMorebtn(title: "一個月後到期", press: () {}),
-                // seven_food_pic(
-                //   title: [
-                //     "新東陽魚鬆", "香腸", "火腿", "金蘭醬油"
-                //   ],
-                //   date: [
-                //     "2023-06-30", "2023-06-30", "2023-06-30", "2023-06-30",
-                //   ],
-                //   number: 1,
-                //   press: () {},
-                //   image: [
-                //     'https://i.im.ge/2023/05/14/URlf5D.image.png',
-                //     'https://i.im.ge/2023/07/06/0ppmbT.image.png',
-                //     'https://i.im.ge/2023/07/06/0ppmbT.image.png',
-                //     'https://i.im.ge/2023/07/06/0ppmbT.image.png',
-                //   ],
-                // ),
-              ],
-            ),
-            SizedBox(
-              height: kDefaultPadding / 2,
-            ),
-            //seven_food_pic(),
+          //seven_food_pic(),
+          SizedBox(
+          height: kDefaultPadding / 2,
+          ),
+          Column(
+          children: [
+          TitleWithMorebtn(title: "一個月後到期", press: () {}),
+          seven_food_pic(
+          title: [
+          "新東陽魚鬆",
           ],
-        ),
-      ),
+          date: [
+          "2023-06-30",
+          ],
+          number: [1],
+          press: () {},
+          image: [
+          'https://i.im.ge/2023/05/14/URlf5D.image.png',
+          ],
+          ),
+          ],
+          ),
+          SizedBox(
+          height: kDefaultPadding / 2,
+          ),
+          //seven_food_pic(),
+          ],
+          ),
+          ),
+          );
+        }
     );
   }
 }
 
+//食譜查詢
 class recipesearch extends StatefulWidget {
   const recipesearch({Key? key}) : super(key: key);
 
@@ -172,6 +206,7 @@ class recipesearch extends StatefulWidget {
 }
 
 class _recipesearchState extends State<recipesearch> {
+  int a=1;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -260,29 +295,7 @@ class list_checkbox extends StatefulWidget {
 }
 
 class _list_checkboxState extends State<list_checkbox> {
-  String text="尚未接收資料";
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  /////
-  void createNewShplistDocument() async {
-    String shpId = firestore
-        .collection('shplist')
-        .doc()
-        .id;
-
-    try {
-      Map<String, dynamic> shpData = {
-        'shp_name': text,
-        'amount': 3,
-      };
-      await firestore.collection('shplist').doc(shpId).set(shpData);
-      print('創建購物清單文件成功');
-    } catch (e) {
-      print('創建購物清單文件時發生錯誤：$e');
-    }
-  }
-  /////
-
+  int a=1;
   TextEditingController? controller;
   TextEditingController? lablecontroller;
   String name = '';
@@ -316,7 +329,6 @@ class _list_checkboxState extends State<list_checkbox> {
 
   @override
   Widget build(BuildContext context) {
-
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -418,12 +430,8 @@ class _list_checkboxState extends State<list_checkbox> {
     ),
   );
   void submit() {
-
     Navigator.of(context, rootNavigator: true)
         .pop([controller!.text, lablecontroller!.text]);
     controller?.clear();
-    createNewShplistDocument();
   }
-
-
 }
