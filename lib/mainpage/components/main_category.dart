@@ -90,13 +90,13 @@ class _foodmanagerState extends State<foodmanager> {
                 Column(
                     children: <Widget>[
                       TitleWithMorebtn(title: "即將到期", press: () {}),
-                      getFood(),
+                      getFood1(),
                       seven_food_pic(
-                        title: commentsData.map((comment) => comment['title'] as String).toList(),
-                        date: commentsData.map((comment) => comment['date'] as String).toList(),
-                        number: commentsData.map((comment) => comment['number'] as int).toList(),
+                        title: commentsData1.map((comment) => comment['title'] as String).toList(),
+                        date: commentsData1.map((comment) => comment['date'] as String).toList(),
+                        number: commentsData1.map((comment) => comment['number'] as int).toList(),
                         press: () {},
-                        image: commentsData.map((comment) => comment['image'] as String).toList(),
+                        image: commentsData1.map((comment) => comment['image'] as String).toList(),
                       )
 
 
@@ -112,52 +112,32 @@ class _foodmanagerState extends State<foodmanager> {
                     Column(
                       children: <Widget>[
                         TitleWithMorebtn(title: "七天後到期", press: () {}),
-                        getFood(),
+                        getFood7(),
                         seven_food_pic(
-                          title: commentsData.map((comment) => comment['title'] as String).toList(),
-                          date: commentsData.map((comment) => comment['date'] as String).toList(),
-                          number: commentsData.map((comment) => comment['number'] as int).toList(),
+                          title: commentsData7.map((comment) => comment['title'] as String).toList(),
+                          date: commentsData7.map((comment) => comment['date'] as String).toList(),
+                          number: commentsData7.map((comment) => comment['number'] as int).toList(),
                           press: () {},
-                          image: commentsData.map((comment) => comment['image'] as String).toList(),
+                          image: commentsData7.map((comment) => comment['image'] as String).toList(),
                         )
 
 
                       ],
                     ),
-          //seven_food_pic(),
-          /*SizedBox(
-              height: kDefaultPadding / 2,
-            ),
-            Column(
-              children: [
-                TitleWithMorebtn(title: "十四天後到期", press: () {}),
-                seven_food_pic(
-                  title: ["apple", "tree"],
-                  date: ["2023-05-08", "2023-05-08"],
-                  number: 100,
-                  press: () {},
-                  image: [
-                    'https://waapple.org/wp-content/uploads/2021/06/Variety_Cosmic-Crisp-transparent-658x677.png',
-                    'https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg',
-                    //'https://picsum.photos/250?image=9',
-                  ],
-                ),
-              ],
-            ),*/
-          //seven_food_pic(),
+
           SizedBox(
           height: kDefaultPadding / 2,
           ),
                     Column(
                       children: <Widget>[
                         TitleWithMorebtn(title: "一個月後到期", press: () {}),
-                        getFood(),
+                        getFood30(),
                         seven_food_pic(
-                          title: commentsData.map((comment) => comment['title'] as String).toList(),
-                          date: commentsData.map((comment) => comment['date'] as String).toList(),
-                          number: commentsData.map((comment) => comment['number'] as int).toList(),
+                          title: commentsData30.map((comment) => comment['title'] as String).toList(),
+                          date: commentsData30.map((comment) => comment['date'] as String).toList(),
+                          number: commentsData30.map((comment) => comment['number'] as int).toList(),
                           press: () {},
-                          image: commentsData.map((comment) => comment['image'] as String).toList(),
+                          image: commentsData30.map((comment) => comment['image'] as String).toList(),
                         )
 
 
