@@ -8,6 +8,7 @@ import '../foodmanager/new_food.dart';
 import '../recipesearch/title_with_text.dart';
 import 'main_search_header.dart';
 import 'getFood.dart';
+import '../recipesearch/getRecipe.dart';
 
 
 class foodmanager extends StatefulWidget {
@@ -183,7 +184,6 @@ class recipesearch extends StatefulWidget {
 }
 
 class _recipesearchState extends State<recipesearch> {
-  int a=1;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -211,32 +211,16 @@ class _recipesearchState extends State<recipesearch> {
               ),
             ),
           ),
+
+          getRecipe(),
           recipe_title_text(
             size: size,
-            title: [
-              "香蒜奶油培根義大利麵",
-              "剝皮辣椒雞湯",
-              "玉米濃湯",
-              "小雞燉蘑菇",
-            ],
-            text: [
-              "蒜頭、培根、蘑菇、鮮奶油、義大利麵、黑胡椒、雞蛋",
-              "薑、雞腿肉、剝皮辣椒罐頭、蛤蜊、米酒",
-              "玉米、鮮奶、雞蛋、紅蘿蔔",
-              "雞翅、菇類、薑、八角、鹽、料理酒、乾香菇、大蔥、乾辣椒、醬油、糖、油",
-            ],
-            imagepath: [
-              "https://i.im.ge/2023/05/14/URFbIT.image.png",
-              "https://i.im.ge/2023/05/14/URFE5r.image.png",
-              "https://i.im.ge/2023/05/14/URFwEq.image.png",
-              "https://i.im.ge/2023/05/14/URFVrJ.image.png",
-            ],
-            step: [
-              "把全部食材丟進鍋裡",
-              "把剝皮辣椒罐頭倒進鍋裡",
-              "把火腿切成丁",
-              "把小雞脫毛",
-            ],
+
+            title: recipeData.map((recipe) => recipe['title'] as String).toList(),
+            text: recipeData.map((recipe) => recipe['text'] as String).toList(),
+            imagepath: recipeData.map((recipe) => recipe['imagepath'] as String).toList(),
+            step: recipeData.map((recipe) => recipe['step'] as String).toList(),
+
             press: () {},
           ),
         ],
@@ -245,6 +229,8 @@ class _recipesearchState extends State<recipesearch> {
   }
 }
 
+
+//購物清單
 class shoppinglist extends StatefulWidget {
   const shoppinglist({
     Key? key,
