@@ -59,7 +59,10 @@ class _foodmanagerState extends State<foodmanager> {
               FocusScope.of(context).requestFocus(FocusNode());
             },
             child: SingleChildScrollView(
-                child: Column(
+                child:
+
+                    //7日內到期
+                Column(
                   children: <Widget>[
                   HeaderWithSearchBOx(
                   size: size,
@@ -89,38 +92,35 @@ class _foodmanagerState extends State<foodmanager> {
 
                 Column(
                     children: <Widget>[
-                      TitleWithMorebtn(title: "即將到期", press: () {}),
-                      getFood1(),
+                      TitleWithMorebtn(title: "七日內到期", press: () {}),
+                      getFood7(),
                       seven_food_pic(
-                        title: commentsData1.map((comment) => comment['title'] as String).toList(),
-                        date: commentsData1.map((comment) => comment['date'] as String).toList(),
-                        number: commentsData1.map((comment) => comment['number'] as int).toList(),
+                        title: commentsData7.map((comment) => comment['title'] as String).toList(),
+                        date: commentsData7.map((comment) => comment['date'] as String).toList(),
+                        number: commentsData7.map((comment) => comment['number'] as int).toList(),
                         press: () {},
-                        image: commentsData1.map((comment) => comment['image'] as String).toList(),
+                        image: commentsData7.map((comment) => comment['image'] as String).toList(),
                       )
-
 
           ],
           ),
-
-
 
           SizedBox(
           height: kDefaultPadding / 2,
           ),
 
+                    //15日內到期
                     Column(
                       children: <Widget>[
-                        TitleWithMorebtn(title: "七天後到期", press: () {}),
-                        getFood7(),
+                        TitleWithMorebtn(title: "十五日內到期", press: () {}),
+                        getFood15(),
                         seven_food_pic(
-                          title: commentsData7.map((comment) => comment['title'] as String).toList(),
-                          date: commentsData7.map((comment) => comment['date'] as String).toList(),
-                          number: commentsData7.map((comment) => comment['number'] as int).toList(),
+                          title: commentsData15.map((comment) => comment['title'] as String).toList(),
+                          date: commentsData15.map((comment) => comment['date'] as String).toList(),
+                          number: commentsData15.map((comment) => comment['number'] as int).toList(),
                           press: () {},
-                          image: commentsData7.map((comment) => comment['image'] as String).toList(),
+                          image: commentsData15.map((comment) => comment['image'] as String).toList(),
                         )
-
 
                       ],
                     ),
@@ -128,9 +128,11 @@ class _foodmanagerState extends State<foodmanager> {
           SizedBox(
           height: kDefaultPadding / 2,
           ),
+
+                    //30日內到期
                     Column(
                       children: <Widget>[
-                        TitleWithMorebtn(title: "一個月後到期", press: () {}),
+                        TitleWithMorebtn(title: "三十日內到期", press: () {}),
                         getFood30(),
                         seven_food_pic(
                           title: commentsData30.map((comment) => comment['title'] as String).toList(),
@@ -146,8 +148,24 @@ class _foodmanagerState extends State<foodmanager> {
           SizedBox(
           height: kDefaultPadding / 2,
           ),
-          //seven_food_pic(),
-          ],
+
+                    Column(
+                      children: <Widget>[
+                        TitleWithMorebtn(title: "其餘食材", press: () {}),
+                        getFood31(),
+                        seven_food_pic(
+                          title: commentsData31.map((comment) => comment['title'] as String).toList(),
+                          date: commentsData31.map((comment) => comment['date'] as String).toList(),
+                          number: commentsData31.map((comment) => comment['number'] as int).toList(),
+                          press: () {},
+                          image: commentsData31.map((comment) => comment['image'] as String).toList(),
+                        )
+
+                      ],
+                    ),
+
+
+                  ],
           ),
           ),
           );
